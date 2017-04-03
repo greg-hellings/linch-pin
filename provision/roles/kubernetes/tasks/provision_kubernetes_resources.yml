@@ -1,0 +1,10 @@
+---
+- name: set API server
+  set_fact:
+    k8s_api_endpoint: "{{ resource_group.api_endpoint }}"
+
+- name: call kubernetes endpoint
+  include: kubernetes_api_call.yml
+  with_items: "{{ resource_group.resources }}"
+  loop_control:
+    loop_var: resource

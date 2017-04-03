@@ -1,0 +1,13 @@
+---
+# This playbook will provision Kubernetes resources
+
+- name: allocate kubernetes output variables
+  set_fact:
+    topology_outputs_kubernetes_resources: []
+
+- name: provision kubernetes resources
+  include: provision_kubernetes_resources.yml
+  when: state == "present"
+  with_items: "{{ k8s_res_grps }}"
+  loop_control:
+    loop_var: resource_group

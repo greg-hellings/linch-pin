@@ -33,7 +33,8 @@
                         {"$ref": "#/definitions/rackspace"},
                         {"$ref": "#/definitions/libvirt"},
                         {"$ref": "#/definitions/duffy"},
-                        {"$ref": "#/definitions/bkr_server"}
+                        {"$ref": "#/definitions/bkr_server"},
+                        {"$ref": "#/definitions/k8s_resource"}
                     ]
             }
         }
@@ -87,6 +88,45 @@
             },
             "required":["flavor","res_type","count","keypair"]
         },
+		"k8s_inline": {
+			"type": "object",
+			"properties": {
+				"inline_data": {
+					"type": "object"
+				}
+			},
+			"required": ["inline_data"]
+		},
+		"k8s_external": {
+			"type": "object",
+			"properties": {
+				"file_reference" : {
+					"type": "string"
+				}
+			},
+			"required": ["file_reference"]
+		},
+		"k8s_resource": {
+			"type": "object",
+			"properties": {
+				"api_endpoint": {
+					"type": "string"
+				},
+				"resource_group_name": {
+					"type": "string"
+				},
+				"resources": {
+					"type": "array",
+					"items": {
+						"oneOf" : [
+							{"$ref": "#/definitions/k8s_inline"},
+							{"$ref": "#/definitions/k8s_external"}
+						]
+					}
+				}
+			},
+			"required": ["api_endpoint", "resources"]
+		},
         "bkr_server": {
              "type": "object",
              "properties": {

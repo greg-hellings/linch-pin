@@ -43,6 +43,10 @@
   set_fact:
     bkr_res_grps: "{{ output.output.data.resource_groups | selectattr('res_group_type', 'equalto', 'beaker') | list }}"
 
+- name: "filtering the output for kubernetes"
+  set_fact:
+    k8s_res_grps: "{{ output.output.data.resource_groups | selectattr('res_group_type', 'equalto', 'kubernetes') | list }}"
+
 - name: "Registering resource group vars from topology"
   set_fact:
     res_grp_vars: "{{ output.output.data.resource_group_vars }}"

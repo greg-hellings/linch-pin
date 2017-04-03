@@ -1,0 +1,19 @@
+---
+- name: provision resources
+  debug:
+    msg: |
+        api_endpoint: {{ resource_group.api_endpoint }}
+        resource: {{ resource }}
+
+- name: do the things
+  kubernetes:
+    api_endpoint: "{{ resource_group.api_endpoint }}"
+    url_username: "{{ resource_group.api_username | default(omit) }}"
+    url_password: "{{ resource_group.api_password | default(omit) }}"
+    insecure: "{{ resource_group.insecure | default(omit) }}"
+    inline_data: "{{ resource.inline_data | default(omit) }}"
+    file_reference: "{{ resource.file_reference | default(omit) }}"
+    state: present
+  register: kubernetes_host
+
+- debug: var=kubernetes_host
